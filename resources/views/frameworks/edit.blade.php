@@ -8,7 +8,7 @@
     </div>
     <div class="row">
         <div class="col">
-            <form method="POST" action="/programming-language/{{$programming_language->id}}">
+            <form method="POST" action="{{route('programming-language.update', $programming_language)}}">
                 {{--Debe ser dentro del formulario - Agregar Cross Site Request Forgery--}}
                 @csrf
                 @method('PUT')

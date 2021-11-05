@@ -28,6 +28,7 @@ class ProgrammingLanguageRequest extends FormRequest
             'description' => 'required',
             'release_year' => ['required','integer'],
             'actual_version' => 'required|max:10',
+            //'image' => ['image']
         ];
     }
 

@@ -56,6 +56,13 @@ class ProgrammingLanguageController extends Controller
 
         //Si las validaciones pasan, el código se sigue ejecutando
 
+        //dd($request->file('image'));
+
+        if($request->hasFile('image')){
+            //$path = $request->file('image')->store('public/programming-languages');
+            $path = $request->file('image')->store('programming-languages', 'public');
+        }
+
         $status = $request->get('status');
         /*true or false*/
         $status = isset($status);
@@ -65,6 +72,7 @@ class ProgrammingLanguageController extends Controller
         $language->description = $request->get('description', 'Sin descripción');
         $language->release_year = $request->get('release_year');
         $language->actual_version = $request->get('actual_version');
+        $language->image = $path;
         $language->status = $status;
 
         $language->save();
@@ -78,9 +86,11 @@ class ProgrammingLanguageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ProgrammingLanguage $programming_language)
     {
-        //
+        return view('programming_languages.show', [
+            'programming_language' => $programming_language
+        ]);
     }
 
     /**
@@ -89,10 +99,8 @@ class ProgrammingLanguageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(ProgrammingLanguage $programming_language) //Model Binding (Type Hinting)
     {
-        $programming_language = ProgrammingLanguage::find($id);
-
         return view('programming_languages.edit', [
             'programming_language' => $programming_language
         ]);
@@ -105,7 +113,7 @@ class ProgrammingLanguageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ProgrammingLanguageRequest $request, $id)
+    public function update(ProgrammingLanguageRequest $request, ProgrammingLanguage $programming_language)
     {
         /*$request->validate([
             'name' => 'required|max:255',
@@ -120,18 +128,28 @@ class ProgrammingLanguageController extends Controller
 
         );*/
 
+        //dd($request->image);
+
+        $path = $programming_language->image;
+        if($request->hasFile('image')){
+            //$path = $request->file('image')->store('public/programming-languages');
+            $path = $request->file('image')->store('programming-languages', 'public');
+            //Revisar si tenía imagen, si es así borrarla
+        }
+
         $status = $request->get('status');
         /*true or false*/
         $status = isset($status);
 
-        $language = ProgrammingLanguage::find($id);
-        $language->name = $request->get('name');
-        $language->description = $request->get('description', 'Sin descripción');
-        $language->release_year = $request->get('release_year');
-        $language->actual_version = $request->get('actual_version');
-        $language->status = $status;
+        //$language = ProgrammingLanguage::findOrFail($id);
+        $programming_language->name = $request->get('name');
+        $programming_language->description = $request->get('description', 'Sin descripción');
+        $programming_language->release_year = $request->get('release_year');
+        $programming_language->actual_version = $request->get('actual_version');
+        $programming_language->image = $path;
+        $programming_language->status = $status;
 
-        $language->save();
+        $programming_language->save();
 
         return redirect('/programming-language');
     }
@@ -142,9 +160,9 @@ class ProgrammingLanguageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ProgrammingLanguage $programming_language)
     {
-        $programming_language = ProgrammingLanguage::find($id);
+        //$programming_language = ProgrammingLanguage::findOrFail($id);
         $programming_language->delete();
         return back();
     }

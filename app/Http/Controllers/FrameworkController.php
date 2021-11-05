@@ -46,7 +46,7 @@ class FrameworkController extends Controller
 
         $framework->save();
 
-        return redirect('/programming-language/'.$programming_language->id);
+        return redirect('/programming-language/'.$programming_language->slug);
 
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -42,5 +43,10 @@ class HomeController extends Controller
         } catch (\Exception $e){
             die("No se pudo conectar a la BD, Error: {$e->getMessage()}");
         }
+    }
+
+    function testStorage(){
+        Storage::disk('local')->put('file.txt', 'Contents');
+        return response()->json(['ok'=>true]);
     }
 }

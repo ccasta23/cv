@@ -1,12 +1,14 @@
 @extends('layouts.base')
 
+@section('title') CVCC | Create Programming Language @endsection
+
 @section('content')
     <div class="row">
         <h1 class="alert alert-success my-3 text-center"> Create new Programming Language</h1>
     </div>
     <div class="row">
         <div class="col">
-            <form method="POST" action="/programming-language">
+            <form method="POST" action="/programming-language" enctype="multipart/form-data">
                 {{--Debe ser dentro del formulario - Agregar Cross Site Request Forgery--}}
                 @csrf
                 <div class="mb-3">
@@ -29,14 +31,22 @@
                         <input type="text" class="form-control" id="actual_version" name="actual_version" value="{{old('actual_version')}}">
                     </div>
                 </div>
-                <div class="mb-3 form-check">
-                    <input
-                        type="checkbox"
-                        class="form-check-input"
-                        id="status" name="status"
-                        {{old('status') ? 'checked': ''}}
-                    >
-                    <label class="form-check-label" for="status">¿Active?</label>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="mb-3 form-check">
+                            <input
+                                type="checkbox"
+                                class="form-check-input"
+                                id="status" name="status"
+                                {{old('status') ? 'checked': ''}}
+                            >
+                            <label class="form-check-label" for="status">¿Active?</label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        {{--<label for="image" class="form-label">Image</label>--}}
+                        <input type="file" class="form-control" id="image" name="image">
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <a href="/programming-language" class="btn btn-danger">Back</a>

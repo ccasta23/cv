@@ -1,5 +1,7 @@
 @extends('layouts.base')
 
+@section('title') CVCC | Programming Languages @endsection
+
 @section('content')
     <div class="row">
         <h1 class="alert alert-success my-3 text-center">Programming Languages</h1>
@@ -14,6 +16,7 @@
                     <th>Release Year</th>
                     <th>Actual Version</th>
                     <th>Status</th>
+                    <th>Show</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </thead>
@@ -29,14 +32,21 @@
                                 {{$programming_language->status ? 'Active' : 'Inactive'}}
                             </td>
                             <td><a
-                                    href="/programming-language/{{$programming_language->id}}/edit"
+                                    href="/programming-language/{{$programming_language->slug}}"
+                                    class="btn btn-outline-primary"
+                                >
+                                    Show
+                                </a>
+                            </td>
+                            <td><a
+                                    href="/programming-language/{{$programming_language->slug}}/edit"
                                     class="btn btn-outline-success"
                                 >
                                     Edit
                                 </a>
                             </td>
                             <td>
-                                <form method="POST" action="/programming-language/{{$programming_language->id}}">
+                                <form method="POST" action="/programming-language/{{$programming_language->slug}}">
                                     @csrf
                                     @method('DELETE')
                                     <input
@@ -56,6 +66,5 @@
         <div class="row">
             <a class="btn btn-success" href="/programming-language/create">Create new Programming Language</a>
         </div>
-
     </div>
 @endsection

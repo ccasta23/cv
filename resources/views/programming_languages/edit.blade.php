@@ -1,12 +1,14 @@
 @extends('layouts.base')
 
+@section('title') CVCC | Edit {{$programming_language->name}} @endsection
+
 @section('content')
     <div class="row">
         <h1 class="alert alert-success my-3 text-center"> Edit {{$programming_language->name}}</h1>
     </div>
     <div class="row">
         <div class="col">
-            <form method="POST" action="/programming-language/{{$programming_language->id}}">
+            <form method="POST" action="/programming-language/{{$programming_language->slug}}" enctype="multipart/form-data">
                 {{--Debe ser dentro del formulario - Agregar Cross Site Request Forgery--}}
                 @csrf
                 @method('PUT')
@@ -28,17 +30,30 @@
                         <input type="text" class="form-control" id="actual_version" name="actual_version" value="{{old('actual_version',$programming_language->actual_version)}}">
                     </div>
                 </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="status" name="status"
-                        {{old('status',$programming_language->status) ? 'checked' : ''}}
-                    >
-                    <label class="form-check-label" for="status">¿Active?</label>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="status" name="status"
+                                {{old('status',$programming_language->status) ? 'checked' : ''}}
+                            >
+                            <label class="form-check-label" for="status">¿Active?</label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        {{--<label for="image" class="form-label">Image</label>--}}
+                        <input type="file" class="form-control" id="image" name="image">
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <a href="/programming-language" class="btn btn-danger">Back</a>
             </form>
         </div>
     </div>
+    @isset($programming_language->image)
+        <img src="{{asset('storage/' . $programming_language->image)}}" class="img-fluid rounded-start" alt="{{$programming_language->name}}">
+    @else
+        <img src="https://gqspcolombia.org/wp-content/themes/consultix/images/no-image-found-360x260.png" class="img-fluid rounded-start" alt="{{$programming_language->name}}">
+    @endisset
     @if($errors->any())
         <div class="row mt-3">
             <div class="alert alert-danger">

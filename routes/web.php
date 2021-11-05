@@ -31,3 +31,9 @@ Route::get('/format', function (){
 
 //Crear una ruta de tipo recurso
 Route::resource('/programming-language','ProgrammingLanguageController');
+
+Route::get('/programming-language/{programming_language:slug}', 'ProgrammingLanguageController@show');
+
+Route::resource('/programming-language/{programming_language}/frameworks','FrameworkController');
+
+Route::get('/testfile', 'HomeController@testStorage');
