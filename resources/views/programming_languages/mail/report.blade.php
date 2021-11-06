@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('title') CVCC | {{$programming_language->name}} @endsection
+@extends('layouts.base')
 
 @section('content')
     <div class="row mt-4">
@@ -21,10 +19,6 @@
                             </h5>
                             <p class="card-text">{{$programming_language->description}}</p>
                             <p class="card-text"><small class="text-muted">Version: {{$programming_language->actual_version}}</small></p>
-                            <form action="{{route('programming-language.email', $programming_language)}}" method="POST">
-                                @csrf
-                                <button class="btn btn-success" type="submit">Enviar email</button>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -57,17 +51,5 @@
                 </div>
             @endforeach
         @endif
-    </div>
-    <div class="row mb-4">
-        <div class="offset-1 col-4">
-            <div class="row">
-                <a href="/programming-language" class="btn btn-danger">Back</a>
-            </div>
-        </div>
-        <div class="col-4 offset-1 ">
-            <div class="row">
-                <a href="/programming-language/{{$programming_language->slug}}/frameworks/create" class="btn btn-success">Create Framework</a>
-            </div>
-        </div>
     </div>
 @endsection

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProgrammingLanguageRequest;
+use App\Mail\ProgrammingLanguageReport;
 use App\ProgrammingLanguage;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ProgrammingLanguageController extends Controller
 {
@@ -165,5 +168,18 @@ class ProgrammingLanguageController extends Controller
         //$programming_language = ProgrammingLanguage::findOrFail($id);
         $programming_language->delete();
         return back();
+    }
+
+    public function sendEmail(ProgrammingLanguage  $programming_language)
+    {
+        $users = User::where('is_subscribed', true)->get();
+        foreach ($users as $user){
+            Mail::to($user->email)
+            ->send(
+                new ProgrammingLanguageReport($programming_language)
+            );
+        }
+
+        return redirect('/programming-language');
     }
 }

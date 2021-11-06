@@ -1,4 +1,4 @@
-@extends('layouts.base')
+@extends('layouts.app')
 
 @section('title') CVCC | Edit {{$programming_language->name}} @endsection
 

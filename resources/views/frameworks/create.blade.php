@@ -1,4 +1,4 @@
-@extends('layouts.base')
+@extends('layouts.app')
 
 @section('title') CVCC | Create Framework for {{$programming_language->name}} @endsection
 

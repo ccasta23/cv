@@ -1,4 +1,4 @@
-@extends('layouts.base')
+@extends('layouts.app')
 
 @section('title') CVCC | Programming Languages @endsection
 
@@ -63,7 +63,9 @@
                 </tbody>
             </table>
         </div>
-        <div class="row">
+    </div>
+    <div class="row">
+        <div class="col">
             <a class="btn btn-success" href="/programming-language/create">Create new Programming Language</a>
         </div>
     </div>
